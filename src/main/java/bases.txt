@@ -1,13 +1,42 @@
+//referencias de cosas que hacer en el código.
+
+public static String[][] crearMatrizAsistentes(){
+        String[][] asistentes = new String[10][5];
+        return asistentes;
+    }
+
+    public static String[][] agregarAsistentes(String[][] asistentes, String nombre, String edad, String entrada, String invitados, String ingresadoBool){
+        for(int i=0;i<10;i++){
+            if(asistentes[i][0] == null){
+                asistentes[i][0] = nombre;
+                asistentes[i][1] = edad;
+                asistentes[i][2] = entrada;
+                asistentes[i][3] = invitados;
+                asistentes[i][4] = ingresadoBool;
+                break;
+                //Boolean.parseBoolean(String)
+                //String.valueOf(boolean)
+            }
+        }
+        return asistentes;
+    }
+
+    public static String[][] inicializarAsistentes(){
+        String[][] asistentes = crearMatrizAsistentes();
+        asistentes = agregarAsistentes(asistentes, "1", "21", "general", "0", "false");
+        asistentes = agregarAsistentes(asistentes,"2", "21", "general", "0", "false");
+        return asistentes;
+
 //Devolver true si la persona en la fila especificada tiene 18 años o más, y false en caso contrario.
     public static boolean verificarEdad(String[][] matriz, String nombre){
         //return mayorDeEdad;
-    } en progreso
+    } listo
 
     //Devolver "General", "VIP", o "False" según el tipo de entrada de la persona en la fila especificada.
     public static String verificarBoleto(String[][] matriz, String nombre, String edad){
         //String.valueOf(boolean)
         //return tipoEntrada;
-    }
+    } en progreso
 
     //Verificar que el número de invitados asignados a una persona con entrada "VIP" no exceda el número máximo permitido (2 invitados por persona).
     public static boolean validarInvitados(String[][] matriz, String nombre){
