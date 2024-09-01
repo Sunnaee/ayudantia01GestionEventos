@@ -23,7 +23,7 @@ public class gestionEventos {
     public static boolean validarInvitados(String[][] listaAsistentes, int fila){
         String tipoEntrada = verificarBoleto(listaAsistentes, fila);
         boolean invitadosValidos = false;
-        if(tipoEntrada == "VIP"){
+        if(tipoEntrada.equals("VIP")){
             if(Integer.parseInt(listaAsistentes[fila][3]) <= 2){
                 invitadosValidos = true;
             }
