@@ -63,7 +63,7 @@ public static String[][] crearMatrizAsistentes(){
             return 9 - aforoVIP;
         }
         return 0;
-    } en progreso
+    } listo
 
     //Cambiar el estado de la persona de "Ingresado" de False a True.
     public static String ingresarPersona(String[][] matriz, String nombre){

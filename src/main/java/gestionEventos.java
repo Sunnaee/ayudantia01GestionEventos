@@ -18,14 +18,21 @@ public class gestionEventos {
     }
 
     //Verificar que el número de invitados asignados a una persona con entrada "VIP" no exceda el número máximo permitido (2 invitados por persona).
-    public static boolean validarInvitados(String[][] listaAsistentes, int fila){
+    public static boolean validarInvitadosVIP(String[][] listaAsistentes, int fila){
         String tipoEntrada = verificarBoleto(listaAsistentes, fila);
         boolean invitadosValidos = false;
         if(tipoEntrada.equals("VIP")){
             if(Integer.parseInt(listaAsistentes[fila][3]) <= 2){
                 invitadosValidos = true;
             }
-        } else if((tipoEntrada.equals("general")) || (tipoEntrada.equals("false"))) {
+        }
+        return invitadosValidos;
+    }
+
+    public static boolean validarInvitadosGeneral(String[][] listaAsistentes, int fila){
+        String tipoEntrada = verificarBoleto(listaAsistentes, fila);
+        boolean invitadosValidos = false;
+        if((tipoEntrada.equals("general")) || (tipoEntrada.equals("false"))) {
             if(Integer.parseInt(listaAsistentes[fila][3]) == 0){
                 invitadosValidos = true;
             }
@@ -36,10 +43,26 @@ public class gestionEventos {
     //Devolver el aforo restante para una sala específica (VIP o General) después de contabilizar a los invitados ya admitidos.
     //Sala general = 10 asistentes (todos entrada general)
     //Sala VIP = 9 asistentes (3 entradas VIP con 2 invitados c/u)
-    public static int aforoDisponible(String[][] listaAsistentes, int fila){
+    public static int aforoDisponibleGeneral(String[][] listaAsistentes, int fila){
         int aforoGeneral = 10;
+        String tipoEntrada = verificarBoleto(listaAsistentes, fila);
+        for(int i=0;i<listaAsistentes.length;i++){
+            if(Boolean.parseBoolean(listaAsistentes[fila][4]) && tipoEntrada.equals("general") && validarInvitadosGeneral(listaAsistentes,fila)){
+                aforoGeneral = aforoGeneral - 1;
+            }
+        }
+        return aforoGeneral;
+    }
+
+    public static int aforoDisponibleVIP(String[][] listaAsistentes, int fila){
         int aforoVIP = 9;
-        for(int i=0;i<listaAsistentes.length;i++){}
+        String tipoEntrada = verificarBoleto(listaAsistentes, fila);
+        for(int i=0;i<listaAsistentes.length;i++){
+            if(Boolean.parseBoolean(listaAsistentes[fila][4]) && tipoEntrada.equals("VIP") && validarInvitadosVIP(listaAsistentes,fila)){
+                aforoVIP = aforoVIP - Integer.parseInt(listaAsistentes[fila][3]) - 1;
+            }
+        }
+        return aforoVIP;
     }
 
     //Validar si la persona en la fila especificada puede entrar al evento, verificando que cumpla con las siguientes condiciones:
@@ -49,7 +72,9 @@ public class gestionEventos {
     //Si el aforo de la sala correspondiente está completo, debe devolver false, incluso si la persona cumple con los requisitos
     public static boolean permitirEntrada(String[][] listaAsistentes, int fila){
         boolean entradaPermitida = false;
-        if(verificarEdad(listaAsistentes,fila) && (verificarBoleto(listaAsistentes,fila).equals("general") || verificarBoleto(listaAsistentes,fila).equals("VIP")) && validarInvitados(listaAsistentes,fila)){
+        if(verificarEdad(listaAsistentes,fila) && verificarBoleto(listaAsistentes,fila).equals("general") && (validarInvitadosGeneral(listaAsistentes,fila)) && aforoDisponibleGeneral(listaAsistentes,fila) > 0){
+            entradaPermitida = true;
+        } else if(verificarEdad(listaAsistentes,fila) && verificarBoleto(listaAsistentes,fila).equals("VIP") && (validarInvitadosVIP(listaAsistentes,fila)) && aforoDisponibleVIP(listaAsistentes,fila) > 0) {
             entradaPermitida = true;
         }
         return entradaPermitida;
