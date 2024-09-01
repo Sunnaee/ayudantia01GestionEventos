@@ -69,7 +69,7 @@ public static String[][] crearMatrizAsistentes(){
     public static String ingresarPersona(String[][] matriz, String nombre){
         //String.valueOf(boolean)
         //return estadoIngreso;
-    }
+    } listo
 
     //Validar si la persona en la fila especificada puede entrar al evento, verificando que cumpla con las siguientes condiciones:
     //Ser mayor de edad.
@@ -78,11 +78,11 @@ public static String[][] crearMatrizAsistentes(){
     //Si el aforo de la sala correspondiente está completo, debe devolver false, incluso si la persona cumple con los requisitos
     public static boolean permitirEntrada(String[][] matriz, String nombre, boolean mayorDeEdad, String tipoEntrada, boolean invitadosValidos, int aforoDisponible){
         //return entradaPermitida;
-    }
+    } listo
 
     //Permitir eliminar a una persona específica de alguna sala. Si se trata de un VIP, se debe remover en conjunto con el número de invitados que trajo.
     //Se cambia su estado de “Ingresado” de True a False
     public static String removerPersona(String[][] matriz, String nombre){
         //String.valueOf(boolean)
         return "false";
-    }
+    } listo
