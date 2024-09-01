@@ -41,10 +41,9 @@ public static String[][] crearMatrizAsistentes(){
     //Verificar que el número de invitados asignados a una persona con entrada "VIP" no exceda el número máximo permitido (2 invitados por persona).
     public static boolean validarInvitados(String[][] matriz, String nombre){
         //return invitadosValidos;
-    } en progreso
+    } listo
 
     //Devolver el aforo restante para una sala específica (VIP o General) después de contabilizar a los invitados ya admitidos.
-    //iniciar salas?
     public static int aforoDisponible(String[][] matriz, String tipoSala){
         int aforoGeneral = 0;
         int aforoVIP = 0;
@@ -64,9 +63,7 @@ public static String[][] crearMatrizAsistentes(){
             return 9 - aforoVIP;
         }
         return 0;
-        //quizá hacerlo con matriz saldría más corto? o dividirlos en otro metodo.
-        //me falta ver si están ingresados T.T
-    }
+    } en progreso
 
     //Cambiar el estado de la persona de "Ingresado" de False a True.
     public static String ingresarPersona(String[][] matriz, String nombre){

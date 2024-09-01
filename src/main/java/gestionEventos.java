@@ -19,4 +19,20 @@ public class gestionEventos {
         return tipoEntrada;
     }
 
+    //Verificar que el número de invitados asignados a una persona con entrada "VIP" no exceda el número máximo permitido (2 invitados por persona).
+    public static boolean validarInvitados(String[][] listaAsistentes, int fila){
+        String tipoEntrada = verificarBoleto(listaAsistentes, fila);
+        boolean invitadosValidos = false;
+        if(tipoEntrada == "VIP"){
+            if(Integer.parseInt(listaAsistentes[fila][3]) <= 2){
+                invitadosValidos = true;
+            }
+//        } else if((tipoEntrada == "general") || (tipoEntrada == "false")) {
+//            if(Integer.parseInt(listaAsistentes[fila][3]) == 0){
+//                invitadosValidos = true;
+//            }
+        }
+        return invitadosValidos;
+    }
+
 }
