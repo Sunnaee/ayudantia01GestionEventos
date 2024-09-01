@@ -5,12 +5,18 @@ public class gestionEventos {
         }
 
     //Devolver true si la persona en la fila especificada tiene 18 años o más, y false en caso contrario.
-    public static boolean verificarEdad(String[][] listaAsistentes, int fila, String edad){
+    public static boolean verificarEdad(String[][] listaAsistentes, int fila){
         boolean mayorDeEdad = false;
         if(Integer.parseInt(listaAsistentes[fila][1]) >= 18){
             mayorDeEdad = true;
         }
         return mayorDeEdad;
+    }
+
+    //Devolver "General", "VIP", o "False" según el tipo de entrada de la persona en la fila especificada.
+    public static String verificarBoleto(String[][] listaAsistentes, int fila){
+        String tipoEntrada = listaAsistentes[fila][2];
+        return tipoEntrada;
     }
 
 }

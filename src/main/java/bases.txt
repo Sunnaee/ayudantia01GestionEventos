@@ -36,12 +36,12 @@ public static String[][] crearMatrizAsistentes(){
     public static String verificarBoleto(String[][] matriz, String nombre, String edad){
         //String.valueOf(boolean)
         //return tipoEntrada;
-    } en progreso
+    } listo
 
     //Verificar que el número de invitados asignados a una persona con entrada "VIP" no exceda el número máximo permitido (2 invitados por persona).
     public static boolean validarInvitados(String[][] matriz, String nombre){
         //return invitadosValidos;
-    }
+    } en progreso
 
     //Devolver el aforo restante para una sala específica (VIP o General) después de contabilizar a los invitados ya admitidos.
     //iniciar salas?
