@@ -1,4 +1,5 @@
 # Gestión de Acceso a Eventos
+###### Estudiante: Sabrina López
 Descripción: Desarrollar un programa en Java para gestionar la entrada a un evento. El sistema debe trabajar con una matriz de 10x5 donde cada fila contiene la siguiente información:
 1. Nombre: Nombre de la persona.
 2. Edad: Edad de la persona.
