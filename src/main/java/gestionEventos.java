@@ -40,26 +40,45 @@ public class gestionEventos {
         return invitadosValidos;
     }
 
+    //Cambiar el estado de la persona de "Ingresado" de False a True.
+    public static String[][] ingresarPersona(String[][] listaAsistentes, int fila){
+        listaAsistentes[fila][4] = "true";
+        return listaAsistentes;
+    }
+
+    //Permitir eliminar a una persona específica de alguna sala. Si se trata de un VIP, se debe remover en conjunto con el número de invitados que trajo.
+    //Se cambia su estado de “Ingresado” de True a False
+    public static String[][] removerPersona(String[][] listaAsistentes, int fila){
+        listaAsistentes[fila][4] = "false";
+        return listaAsistentes;
+    }
+
     //Devolver el aforo restante para una sala específica (VIP o General) después de contabilizar a los invitados ya admitidos.
     //Sala general = 10 asistentes (todos entrada general)
     //Sala VIP = 9 asistentes (3 entradas VIP con 2 invitados c/u)
-    public static int aforoDisponibleGeneral(String[][] listaAsistentes, int fila){
+    public static int aforoDisponibleGeneral(String[][] listaAsistentes){
         int aforoGeneral = 10;
-        String tipoEntrada = verificarBoleto(listaAsistentes, fila);
         for(int i=0;i<listaAsistentes.length;i++){
-            if(Boolean.parseBoolean(listaAsistentes[fila][4]) && tipoEntrada.equals("general") && validarInvitadosGeneral(listaAsistentes,fila)){
-                aforoGeneral = aforoGeneral - 1;
+            if(verificarEdad(listaAsistentes,i) && Boolean.parseBoolean(listaAsistentes[i][4]) && verificarBoleto(listaAsistentes, i).equals("general")){
+                if(validarInvitadosGeneral(listaAsistentes,i)){
+                    aforoGeneral = aforoGeneral - 1;
+                } else {
+                    removerPersona(listaAsistentes,i);
+                }
             }
         }
         return aforoGeneral;
     }
 
-    public static int aforoDisponibleVIP(String[][] listaAsistentes, int fila){
+    public static int aforoDisponibleVIP(String[][] listaAsistentes){
         int aforoVIP = 9;
-        String tipoEntrada = verificarBoleto(listaAsistentes, fila);
         for(int i=0;i<listaAsistentes.length;i++){
-            if(Boolean.parseBoolean(listaAsistentes[fila][4]) && tipoEntrada.equals("VIP") && validarInvitadosVIP(listaAsistentes,fila)){
-                aforoVIP = aforoVIP - Integer.parseInt(listaAsistentes[fila][3]) - 1;
+            if(verificarEdad(listaAsistentes,i) && Boolean.parseBoolean(listaAsistentes[i][4]) && verificarBoleto(listaAsistentes, i).equals("VIP") && validarInvitadosVIP(listaAsistentes,i)){
+                if(validarInvitadosVIP(listaAsistentes,i)) {
+                    aforoVIP = aforoVIP - Integer.parseInt(listaAsistentes[i][3]) - 1;
+                } else {
+                    removerPersona(listaAsistentes,i);
+                }
             }
         }
         return aforoVIP;
@@ -72,29 +91,16 @@ public class gestionEventos {
     //Si el aforo de la sala correspondiente está completo, debe devolver false, incluso si la persona cumple con los requisitos
     public static boolean permitirEntrada(String[][] listaAsistentes, int fila){
         boolean entradaPermitida = false;
-        if(verificarEdad(listaAsistentes,fila) && verificarBoleto(listaAsistentes,fila).equals("general") && (validarInvitadosGeneral(listaAsistentes,fila)) && aforoDisponibleGeneral(listaAsistentes,fila) > 0){
+        if(verificarEdad(listaAsistentes,fila) && verificarBoleto(listaAsistentes,fila).equals("general") && (validarInvitadosGeneral(listaAsistentes,fila)) && aforoDisponibleGeneral(listaAsistentes) > 0){
             entradaPermitida = true;
-        } else if(verificarEdad(listaAsistentes,fila) && verificarBoleto(listaAsistentes,fila).equals("VIP") && (validarInvitadosVIP(listaAsistentes,fila)) && aforoDisponibleVIP(listaAsistentes,fila) > 0) {
+            ingresarPersona(listaAsistentes,fila);
+        } else if(verificarEdad(listaAsistentes,fila) && verificarBoleto(listaAsistentes,fila).equals("VIP") && (validarInvitadosVIP(listaAsistentes,fila)) && aforoDisponibleVIP(listaAsistentes) > 0) {
             entradaPermitida = true;
+            ingresarPersona(listaAsistentes,fila);
+        } else {
+            removerPersona(listaAsistentes,fila);
         }
         return entradaPermitida;
-    }
-
-    //Cambiar el estado de la persona de "Ingresado" de False a True.
-    public static String[][] ingresarPersona(String[][] listaAsistentes, int fila){
-        if(permitirEntrada(listaAsistentes,fila)){
-            listaAsistentes[fila][4] = "true";
-        }
-        return listaAsistentes;
-    }
-
-    //Permitir eliminar a una persona específica de alguna sala. Si se trata de un VIP, se debe remover en conjunto con el número de invitados que trajo.
-    //Se cambia su estado de “Ingresado” de True a False
-    public static String[][] removerPersona(String[][] listaAsistentes, int fila){
-        if(!permitirEntrada(listaAsistentes,fila)){
-            listaAsistentes[fila][4] = "false";
-        }
-        return listaAsistentes;
     }
 
 }
