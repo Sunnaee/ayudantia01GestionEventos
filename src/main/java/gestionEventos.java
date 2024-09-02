@@ -29,6 +29,7 @@ public class gestionEventos {
         return invitadosValidos;
     }
 
+    //Validar que los asistentes con entrada general no contemplen invitados.
     public static boolean validarInvitadosGeneral(String[][] listaAsistentes, int fila){
         String tipoEntrada = verificarBoleto(listaAsistentes, fila);
         boolean invitadosValidos = false;
@@ -54,8 +55,8 @@ public class gestionEventos {
     }
 
     //Devolver el aforo restante para una sala específica (VIP o General) después de contabilizar a los invitados ya admitidos.
-    //Sala general = 10 asistentes (todos entrada general)
-    //Sala VIP = 9 asistentes (3 entradas VIP con 2 invitados c/u)
+    //Sala general = 10 asistentes (todos entrada general).
+    //También removerá a la persona si no cumple los requisitos.
     public static int aforoDisponibleGeneral(String[][] listaAsistentes){
         int aforoGeneral = 10;
         for(int i=0;i<listaAsistentes.length;i++){
@@ -70,6 +71,8 @@ public class gestionEventos {
         return aforoGeneral;
     }
 
+    //Sala VIP = 9 asistentes (3 entradas VIP con 2 invitados c/u).
+    //También removerá a la persona si no cumple los requisitos.
     public static int aforoDisponibleVIP(String[][] listaAsistentes){
         int aforoVIP = 9;
         for(int i=0;i<listaAsistentes.length;i++){
@@ -88,7 +91,8 @@ public class gestionEventos {
     //Ser mayor de edad.
     //Tener una entrada válida ("General" o "VIP").
     //Verificar que no se exceda el aforo máximo de la sala correspondiente (VIP o General).
-    //Si el aforo de la sala correspondiente está completo, debe devolver false, incluso si la persona cumple con los requisitos
+    //Si el aforo de la sala correspondiente está completo, debe devolver false, incluso si la persona cumple con los requisitos.
+    //También ingresará, o removerá, a la persona si cumple, o no, los requisitos.
     public static boolean permitirEntrada(String[][] listaAsistentes, int fila){
         boolean entradaPermitida = false;
         if(verificarEdad(listaAsistentes,fila) && verificarBoleto(listaAsistentes,fila).equals("general") && (validarInvitadosGeneral(listaAsistentes,fila)) && aforoDisponibleGeneral(listaAsistentes) > 0){
